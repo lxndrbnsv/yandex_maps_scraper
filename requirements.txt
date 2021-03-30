@@ -1,0 +1,6 @@
+et-xmlfile==1.0.1
+openpyxl==3.0.7
+pkg-resources==0.0.0
+PySimpleGUI==4.38.0
+selenium==3.141.0
+urllib3==1.26.4
