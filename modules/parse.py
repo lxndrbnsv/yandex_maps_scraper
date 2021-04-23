@@ -20,10 +20,7 @@ class GetCompanies:
         input_field.send_keys(query)
         button.click()
         try:
-            inside = browser.find_element_by_xpath(
-                "/html/body/div[1]/div[2]/div[4]/div[1]/div[1]/div[1]/div/"
-                "div[1]/div/div[4]/div[2]/div[2]/div/div/div/div[1]/div[3]"
-            )
+            inside = browser.find_element_by_class_name("_name_inside")
 
             inside.click()
 
