@@ -11,7 +11,7 @@ from modules.proxy import GetProxy, AddProxy
 
 
 options = Options()
-options.headless = True
+# options.headless = True
 browser = webdriver.Chrome(
     executable_path="./webdriver/chromedriver",
     options=options

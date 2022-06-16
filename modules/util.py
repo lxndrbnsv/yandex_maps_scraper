@@ -15,3 +15,17 @@ class CheckWB:
         ws = wb['Worksheet']
 
         print(ws.max_row)
+
+
+class NormalizePhoneNumber:
+    def __init__(self, phone_string):
+
+        stripped_symbols = phone_string.replace("(", "").replace(")", "").replace(" ", "").replace("-", "")
+        if stripped_symbols[0] == "8":
+            stripped_list = list(stripped_symbols)
+            stripped_list[0] = "+7"
+            normalized = "".join(stripped_list)
+        else:
+            normalized = stripped_symbols
+
+        self.normalize = normalized

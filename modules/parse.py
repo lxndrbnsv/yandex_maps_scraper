@@ -3,6 +3,8 @@ import time
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException
 
+from modules.util import NormalizePhoneNumber
+
 
 class GetCompanies:
     def __init__(self, browser, query):
@@ -87,9 +89,11 @@ class GetCompanyData:
             return btn_texts[0]
 
         def get_phone():
-            return browser.find_element_by_class_name(
+            phone_unformatted = browser.find_element_by_class_name(
                 "orgpage-phones-view__phone-number"
             ).text
+            phone_formatted = NormalizePhoneNumber(phone_unformatted).normalize
+            return phone_formatted
 
         def get_website():
             try:
