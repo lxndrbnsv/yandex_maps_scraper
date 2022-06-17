@@ -11,7 +11,7 @@ from modules.proxy import GetProxy, AddProxy
 
 
 options = Options()
-options.headless = True
+# options.headless = True
 browser = webdriver.Chrome(
     executable_path="./webdriver/chromedriver",
     options=options
@@ -111,3 +111,25 @@ if __name__ == "__main__":
                 Sg.popup_ok("Прокси добавлен!")
 
     browser.quit()
+
+    # Дебажил без гуи
+    # queries = ReadQueries(filepath="./data/addr.txt").queries
+    #
+    # for q in queries:
+    #     print(q)
+    #     companies = GetCompanies(browser=browser, query=q).results
+    #     print(f"Собрано {len(companies)} организаций.")
+    #     print("Обработка данных:")
+    #
+    #     for company in companies:
+    #         company_dict = GetCompanyData(browser=browser,
+    #                                       company_link=company).data
+    #         if company_dict is not None:
+    #             company_dict["address"] = q
+    #             WriteXLSX(company_dict=company_dict)
+    #             print("Данные записаны")
+    #         else:
+    #             print("Отсутствуют контактные данные!")
+    #     print("--- --- ---")
+    # browser.quit()
+

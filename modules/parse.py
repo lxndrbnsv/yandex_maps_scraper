@@ -1,13 +1,17 @@
 import time
+import traceback
 
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 
 
 class GetCompanies:
     def __init__(self, browser, query):
-        browser.implicitly_wait(15)
-
+        browser.implicitly_wait(5)
         action = ActionChains(browser)
 
         url = "https://yandex.ru/maps/213/moscow/"
@@ -19,39 +23,55 @@ class GetCompanies:
             "small-search-form-view__button")
         input_field.send_keys(query)
         button.click()
+        viewed = []
+        companies = []
         try:
-            inside = browser.find_element_by_class_name("_name_inside")
-
-            inside.click()
-
-            company_area = browser.find_element_by_class_name(
-                "card-businesses-list__list"
-            )
-            links = company_area.find_elements_by_class_name(
-                "search-snippet-view__link-overlay"
-            )
-            companies = []
             while True:
-                previous_len = len(companies)
-                action.move_to_element(links[-1]).perform()
+                browser.implicitly_wait(2)
+                prev_len = len(companies)
+                company_area = browser.find_element_by_class_name("search-list-view__list")
+                cards = company_area.find_elements_by_class_name("search-snippet-view")
+                action.move_to_element(cards[-1]).perform()
+                for c in cards:
+                    if c not in viewed:
+                        link = c.find_element_by_class_name("search-snippet-view__link-overlay").get_attribute("href")
+                        print(link)
+                        if link not in companies:
+                            companies.append(link)
+                    viewed.append(c)
 
-                time.sleep(1)
-
-                links = company_area.find_elements_by_class_name(
-                    "search-snippet-view__link-overlay"
-                )
-                for link in links:
-                    link_href = link.get_attribute("href")
-                    if link_href not in companies:
-                        companies.append(link_href)
-                current_len = len(companies)
-
-                if current_len == previous_len:
+                curr_len = len(companies)
+                print(curr_len)
+                try:
+                    browser.implicitly_wait(0.1)
+                    company_area = browser.find_element_by_class_name("add-business-view")
                     break
+                except Exception:
+                    pass
+
+            # companies = []
+            # while True:
+            #     previous_len = len(companies)
+            #     action.move_to_element(links[-1]).perform()
+            #
+            #     time.sleep(1)
+            #
+            #     links = browser.find_elements_by_class_name(
+            #         "search-snippet-view__link-overlay"
+            #     )
+            #     for link in links:
+            #         link_href = link.get_attribute("href")
+            #         if link_href not in companies:
+            #             companies.append(link_href)
+            #     current_len = len(companies)
+            #
+            #     if current_len == previous_len:
+            #         break
 
             self.results = companies
 
         except NoSuchElementException:
+            traceback.print_exc()
             print("Организации в здании отсутствуют!")
             self.results = []
 
