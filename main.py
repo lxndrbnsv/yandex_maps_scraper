@@ -1,3 +1,6 @@
+import sys
+import warnings
+
 import PySimpleGUI as Sg
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -10,8 +13,13 @@ from modules.util import ClearWB
 from modules.proxy import GetProxy, AddProxy
 
 
+
+warnings.filterwarnings("ignore", category=UserWarning)
+
+
 options = Options()
-# options.headless = True
+options.headless = True
+options.add_experimental_option("excludeSwitches", ["enable-logging"])
 browser = webdriver.Chrome(
     executable_path="./webdriver/chromedriver",
     options=options

@@ -107,26 +107,28 @@ class GetCompanyData:
 
         browser.get(company_link)
         print(company_link)
+        try:
+            name = get_name()
+            company_type = get_type()
 
-        name = get_name()
-        company_type = get_type()
+            if reveal_phone() is True:
+                phone = get_phone()
+            else:
+                phone = None
 
-        if reveal_phone() is True:
-            phone = get_phone()
-        else:
-            phone = None
+            website = get_website()
 
-        website = get_website()
+            print(name)
 
-        print(name)
-
-        if phone is not None:
-            self.data = dict(
-                link=company_link,
-                name=name,
-                type=company_type,
-                phone=phone,
-                website=website
-            )
-        else:
+            if phone is not None:
+                self.data = dict(
+                    link=company_link,
+                    name=name,
+                    type=company_type,
+                    phone=phone,
+                    website=website
+                )
+            else:
+                self.data = None
+        except Exception:
             self.data = None
