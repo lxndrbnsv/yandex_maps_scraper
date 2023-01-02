@@ -15,7 +15,7 @@ class GetCompanies:
         url = "https://yandex.ru/maps/213/moscow/"
 
         browser.get(url)
-
+        time.sleep(2)
         input_field = browser.find_element_by_class_name("input__control")
         button = browser.find_element_by_class_name(
             "small-search-form-view__button")

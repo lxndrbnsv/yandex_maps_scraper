@@ -1,4 +1,3 @@
-import sys
 import warnings
 
 import PySimpleGUI as Sg
@@ -11,7 +10,6 @@ from modules.parse import GetCompanies, GetCompanyData
 from modules.write import WriteXLSX
 from modules.util import ClearWB
 from modules.proxy import GetProxy, AddProxy
-
 
 
 warnings.filterwarnings("ignore", category=UserWarning)
