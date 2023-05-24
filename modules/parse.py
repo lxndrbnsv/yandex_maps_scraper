@@ -18,7 +18,8 @@ class GetCompanies:
         time.sleep(2)
         input_field = browser.find_element_by_class_name("input__control")
         button = browser.find_element_by_class_name(
-            "small-search-form-view__button")
+            "small-search-form-view__button"
+        )
         input_field.send_keys(query)
         button.click()
         try:
@@ -62,7 +63,9 @@ class GetCompanyData:
     def __init__(self, browser, company_link):
         def reveal_phone():
             try:
-                phone_div = browser.find_element_by_class_name("card-phones-view__more")
+                phone_div = browser.find_element_by_class_name(
+                    "card-phones-view__more"
+                )
                 phone_div.click()
             except NoSuchElementException:
                 return False
@@ -126,7 +129,7 @@ class GetCompanyData:
                     name=name,
                     type=company_type,
                     phone=phone,
-                    website=website
+                    website=website,
                 )
             else:
                 self.data = None

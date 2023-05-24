@@ -19,8 +19,7 @@ options = Options()
 options.headless = True
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 browser = webdriver.Chrome(
-    executable_path="./webdriver/chromedriver",
-    options=options
+    executable_path="./webdriver/chromedriver", options=options
 )
 
 Sg.theme("TealMono")
@@ -92,8 +91,9 @@ if __name__ == "__main__":
                     print("Обработка данных:")
 
                     for company in companies:
-                        company_dict = GetCompanyData(browser=browser,
-                                                      company_link=company).data
+                        company_dict = GetCompanyData(
+                            browser=browser, company_link=company
+                        ).data
                         if company_dict is not None:
                             company_dict["address"] = q
                             WriteXLSX(company_dict=company_dict)
@@ -106,7 +106,6 @@ if __name__ == "__main__":
                 Sg.popup("Добавьте файл с адресами!")
 
         if event == "Добавить прокси":
-
             proxy = values[1]
             print(values)
             print(proxy)
