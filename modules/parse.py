@@ -1,5 +1,6 @@
 import time
 
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException
 
@@ -16,22 +17,33 @@ class GetCompanies:
 
         browser.get(url)
         time.sleep(2)
-        input_field = browser.find_element_by_class_name("input__control")
-        button = browser.find_element_by_class_name(
-            "small-search-form-view__button"
+        # input_field = browser.find_element_by_class_name("input__control")
+        input_field = browser.find_element(By.CLASS_NAME, "input__control")
+        # button = browser.find_element_by_class_name(
+        #     "small-search-form-view__button"
+        # )
+        button = browser.find_element(
+            By.CLASS_NAME, "small-search-form-view__button"
         )
         input_field.send_keys(query)
         button.click()
         try:
-            inside = browser.find_element_by_class_name("_name_inside")
+            # inside = browser.find_element_by_class_name("_name_inside")
+            inside = browser.find_element(By.CLASS_NAME, "_name_inside")
 
             inside.click()
 
-            company_area = browser.find_element_by_class_name(
-                "card-businesses-list__list"
+            # company_area = browser.find_element_by_class_name(
+            #     "card-businesses-list__list"
+            # )
+            company_area = browser.find_element(
+                By.CLASS_NAME, "card-businesses-list__list"
             )
-            links = company_area.find_elements_by_class_name(
-                "search-snippet-view__link-overlay"
+            # links = company_area.find_elements_by_class_name(
+            #     "search-snippet-view__link-overlay"
+            # )
+            links = company_area.find_elements(
+                By.CLASS_NAME, "search-snippet-view__link-overlay"
             )
             companies = []
             while True:
@@ -40,8 +52,11 @@ class GetCompanies:
 
                 time.sleep(1)
 
-                links = company_area.find_elements_by_class_name(
-                    "search-snippet-view__link-overlay"
+                # links = company_area.find_elements_by_class_name(
+                #     "search-snippet-view__link-overlay"
+                # )
+                links = company_area.find_elements(
+                    By.CLASS_NAME, "search-snippet-view__link-overlay"
                 )
                 for link in links:
                     link_href = link.get_attribute("href")
@@ -63,8 +78,11 @@ class GetCompanyData:
     def __init__(self, browser, company_link):
         def reveal_phone():
             try:
-                phone_div = browser.find_element_by_class_name(
-                    "card-phones-view__more"
+                # phone_div = browser.find_element_by_class_name(
+                #     "card-phones-view__more"
+                # )
+                phone_div = browser.find_element(
+                    By.CLASS_NAME, "card-phones-view__more"
                 )
                 phone_div.click()
             except NoSuchElementException:
@@ -72,19 +90,24 @@ class GetCompanyData:
             return True
 
         def get_name():
-            return browser.find_element_by_tag_name("h1").text
+            return browser.find_element(By.TAG_NAME, "h1").text
 
         def get_type():
             try:
-                features_div = browser.find_element_by_class_name(
-                    "business-features-view"
+                # features_div = browser.find_element_by_class_name(
+                #     "business-features-view"
+                # )
+                features_div = browser.find_element(
+                    By.CLASS_NAME, "business-features-view"
                 )
             except NoSuchElementException:
                 return "Другое"
 
             btn_texts = []
 
-            features = features_div.find_elements_by_class_name("button__text")
+            features = features_div.find_elements(
+                By.CLASS_NAME, "button__text"
+            )
 
             for feature in features:
                 btn_texts.append(feature.text)
@@ -92,16 +115,22 @@ class GetCompanyData:
             return btn_texts[0]
 
         def get_phone():
-            phone_unformatted = browser.find_element_by_class_name(
-                "orgpage-phones-view__phone-number"
+            # phone_unformatted = browser.find_element_by_class_name(
+            #     "orgpage-phones-view__phone-number"
+            # ).text
+            phone_unformatted = browser.find_element(
+                By.CLASS_NAME, "orgpage-phones-view__phone-number"
             ).text
             phone_formatted = NormalizePhoneNumber(phone_unformatted).normalize
             return phone_formatted
 
         def get_website():
             try:
-                return browser.find_element_by_class_name(
-                    "business-urls-view__link"
+                # return browser.find_element_by_class_name(
+                #     "business-urls-view__link"
+                # ).get_attribute("href")
+                return browser.find_element(
+                    By.CLASS_NAME, "business-urls-view__link"
                 ).get_attribute("href")
             except NoSuchElementException:
                 return None

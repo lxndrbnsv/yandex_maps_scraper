@@ -10,17 +10,25 @@ from modules.parse import GetCompanies, GetCompanyData
 from modules.write import WriteXLSX
 from modules.util import ClearWB
 from modules.proxy import GetProxy, AddProxy
+from selenium.webdriver.chrome.service import Service
+
 
 
 warnings.filterwarnings("ignore", category=UserWarning)
 
 
-options = Options()
-options.headless = True
-options.add_experimental_option("excludeSwitches", ["enable-logging"])
-browser = webdriver.Chrome(
-    executable_path="./webdriver/chromedriver", options=options
-)
+service = Service()
+options = webdriver.ChromeOptions()
+options.add_argument("--headless")
+browser = webdriver.Chrome(service=service, options=options)
+
+
+# options = Options()
+# options.headless = True
+# options.add_experimental_option("excludeSwitches", ["enable-logging"])
+# browser = webdriver.Chrome(
+#     executable_path="./webdriver/chromedriver", options=options
+# )
 
 Sg.theme("TealMono")
 
