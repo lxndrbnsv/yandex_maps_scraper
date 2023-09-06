@@ -1,3 +1,4 @@
 .idea/
 venv/
 webdriver/
+__pycache__/
