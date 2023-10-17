@@ -19,7 +19,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 service = Service()
 options = webdriver.ChromeOptions()
-options.add_argument("--headless")
+# options.add_argument("--headless")
 browser = webdriver.Chrome(service=service, options=options)
 
 
